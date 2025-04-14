@@ -1,31 +1,25 @@
-import { canvas, ImageSprite, narration } from "@drincs/pixi-vn";
-import Stack from "@mui/joy/Stack";
-import { useQueryClient } from "@tanstack/react-query";
-import { motion } from "motion/react";
-import { useEffect } from "react";
-import MenuButton from "../components/MenuButton";
-import { CANVAS_UI_LAYER_NAME, NARRATION_ROUTE } from "../constans";
-import useGameProps from "../hooks/useGameProps";
-import startLabel from "../labels/startLabel";
-import useGameSaveScreenStore from "../stores/useGameSaveScreenStore";
-import useInterfaceStore from "../stores/useInterfaceStore";
-import useSettingsScreenStore from "../stores/useSettingsScreenStore";
-import { INTERFACE_DATA_USE_QUEY_KEY } from "../use_query/useQueryInterface";
-import useQueryLastSave from "../use_query/useQueryLastSave";
-import { loadSave } from "../utils/save-utility";
+import { canvas, ImageSprite, narration } from '@drincs/pixi-vn';
+import Stack from '@mui/joy/Stack';
+import { useQueryClient } from '@tanstack/react-query';
+import { motion } from 'motion/react';
+import { useEffect } from 'react';
+import MenuButton from '../components/MenuButton';
+import { CANVAS_UI_LAYER_NAME, NARRATION_ROUTE } from '../constans';
+import useGameProps from '../hooks/useGameProps';
+import startLabel from '../labels/startLabel';
+import useInterfaceStore from '../stores/useInterfaceStore';
+import { INTERFACE_DATA_USE_QUEY_KEY } from '../use_query/useQueryInterface';
 
 export default function MainMenu() {
-    const setOpenSettings = useSettingsScreenStore((state) => state.setOpen);
     const editHideInterface = useInterfaceStore((state) => state.setHidden);
-    const editSaveScreen = useGameSaveScreenStore((state) => state.editOpen);
+
     const queryClient = useQueryClient();
-    const { data: lastSave = null, isLoading } = useQueryLastSave();
     const gameProps = useGameProps();
-    const { uiTransition: t, navigate, notify } = gameProps;
+    const { uiTransition: t, navigate } = gameProps;
 
     useEffect(() => {
         editHideInterface(false);
-        let bg = new ImageSprite({}, "background_main_menu");
+        let bg = new ImageSprite({}, 'background_main_menu');
         bg.load();
         let layer = canvas.getLayer(CANVAS_UI_LAYER_NAME);
         if (layer) {
@@ -44,34 +38,17 @@ export default function MainMenu() {
             alignItems='flex-start'
             spacing={{ xs: 1, sm: 2, lg: 3 }}
             sx={{
-                height: "100%",
-                width: "100%",
+                height: '100%',
+                width: '100%',
                 paddingLeft: { xs: 1, sm: 2, md: 4, lg: 6, xl: 8 },
             }}
             component={motion.div}
             initial='closed'
-            animate={"open"}
+            animate={'open'}
             exit='closed'
         >
             <MenuButton
-                onClick={() => {
-                    if (!lastSave) {
-                        return;
-                    }
-                    loadSave(lastSave, navigate)
-                        .then(() => queryClient.invalidateQueries({ queryKey: [INTERFACE_DATA_USE_QUEY_KEY] }))
-                        .catch((e) => {
-                            notify(t("fail_load"), { variant: "error" });
-                            console.error(e);
-                        });
-                }}
-                transitionDelay={0.1}
-                loading={isLoading}
-                disabled={!isLoading && !lastSave}
-            >
-                {t("continue")}
-            </MenuButton>
-            <MenuButton
+                className='w-64 !bg-black !border-2 !border-white'
                 onClick={() => {
                     canvas.removeAll();
                     navigate(NARRATION_ROUTE);
@@ -81,13 +58,7 @@ export default function MainMenu() {
                 }}
                 transitionDelay={0.2}
             >
-                {t("start")}
-            </MenuButton>
-            <MenuButton onClick={editSaveScreen} transitionDelay={0.3}>
-                {t("load")}
-            </MenuButton>
-            <MenuButton onClick={() => setOpenSettings(true)} transitionDelay={0.4}>
-                {t("settings")}
+                {t('start')}
             </MenuButton>
         </Stack>
     );

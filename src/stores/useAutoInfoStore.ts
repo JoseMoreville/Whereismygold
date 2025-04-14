@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 type AutoInfoStoreType = {
     /**
@@ -21,11 +21,11 @@ type AutoInfoStoreType = {
 
 const useAutoInfoStore = create<AutoInfoStoreType>((set) => ({
     enabled: false,
-    time: localStorage.getItem("auto_forward_second") ? parseInt(localStorage.getItem("auto_forward_second")!) : 1,
+    time: localStorage.getItem('auto_forward_second') ? parseInt(localStorage.getItem('auto_forward_second')!) : 1,
     editEnabled: () => set((state) => ({ enabled: !state.enabled })),
     setTime: (value: number) => {
         if (value) {
-            localStorage.setItem("auto_forward_second", value.toString());
+            localStorage.setItem('auto_forward_second', value.toString());
             set({ time: value });
         }
     },

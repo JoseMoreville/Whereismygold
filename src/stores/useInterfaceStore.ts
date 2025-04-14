@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 type InterfaceStoreType = {
     /**
@@ -18,14 +18,14 @@ type InterfaceStoreType = {
 const useInterfaceStore = create<InterfaceStoreType>((set) => ({
     hidden: false,
     editHidden: () => {
-        if (location.pathname === "/") {
+        if (location.pathname === '/') {
             console.log("Can't hide interface on home page");
             return;
         }
         set((state) => ({ hidden: !state.hidden }));
     },
     setHidden: (value: boolean) => {
-        if (location.pathname === "/") {
+        if (location.pathname === '/') {
             console.log("Can't hide interface on home page");
             return;
         }

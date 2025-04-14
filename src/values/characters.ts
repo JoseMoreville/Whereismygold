@@ -1,23 +1,22 @@
-import { saveCharacter } from "@drincs/pixi-vn";
-import Character from "../models/Character";
+import { CharacterBaseModel, saveCharacter } from '@drincs/pixi-vn';
 
-export const mc = new Character("mc", {
-    name: "Me",
+export const webiem = new CharacterBaseModel('webiem', {
+    name: 'Webiem',
+    color: '#4CAF50',
+    icon: '/webio.webp',
 });
 
-export const james = new Character("james", {
-    name: "James",
-    color: "#0084ac",
+export const goblin = new CharacterBaseModel('goblin', {
+    name: 'Goblin',
+    color: '#8BC34A',
+    icon: '/goblin.png',
 });
 
-export const steph = new Character("steph", {
-    name: "Steph",
-    color: "#ac5900",
+export const storekeeper = new CharacterBaseModel('storekeeper', {
+    name: 'Storekeeper',
+    color: '#795548',
+    icon: '/shopkeeper.png',
 });
 
-export const sly = new Character("sly", {
-    name: "Sly",
-    color: "#6d00ac",
-});
-
-saveCharacter([mc, james, steph, sly]);
+// Save characters in the game
+saveCharacter([webiem, goblin, storekeeper]);

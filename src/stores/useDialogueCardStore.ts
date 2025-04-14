@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 type DialogueCardStoreType = {
     /**
@@ -20,16 +20,16 @@ type DialogueCardStoreType = {
 };
 
 const useDialogueCardStore = create<DialogueCardStoreType>((set) => ({
-    height: localStorage.getItem("dialogue_card_height") ? parseInt(localStorage.getItem("dialogue_card_height")!) : 30,
+    height: localStorage.getItem('dialogue_card_height') ? parseInt(localStorage.getItem('dialogue_card_height')!) : 30,
     setHeight: (value: number) => {
-        localStorage.setItem("dialogue_card_height", value.toString());
+        localStorage.setItem('dialogue_card_height', value.toString());
         set({ height: value });
     },
-    imageWidth: localStorage.getItem("dialogue_card_image_width")
-        ? parseInt(localStorage.getItem("dialogue_card_image_width")!)
-        : 16,
+    imageWidth: localStorage.getItem('dialogue_card_image_width')
+        ? parseInt(localStorage.getItem('dialogue_card_image_width')!)
+        : 5,
     setImageWidth: (value: number) => {
-        localStorage.setItem("dialogue_card_image_width", value.toString());
+        localStorage.setItem('dialogue_card_image_width', value.toString());
         set({ imageWidth: value });
     },
 }));

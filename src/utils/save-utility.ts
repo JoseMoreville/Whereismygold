@@ -1,6 +1,6 @@
-import { canvas, getSaveData, loadSaveData } from "@drincs/pixi-vn";
-import { LOADING_ROUTE, MAIN_MENU_ROUTE, NARRATION_ROUTE, REFRESH_SAVE_LOCAL_STORAGE_KEY } from "../constans";
-import GameSaveData from "../models/GameSaveData";
+import { canvas, getSaveData, loadSaveData } from '@drincs/pixi-vn';
+import { LOADING_ROUTE, MAIN_MENU_ROUTE, NARRATION_ROUTE, REFRESH_SAVE_LOCAL_STORAGE_KEY } from '../constans';
+import GameSaveData from '../models/GameSaveData';
 import {
     deleteRowFromIndexDB,
     getLastRowFromIndexDB,
@@ -8,16 +8,16 @@ import {
     getRowFromIndexDB,
     INDEXED_DB_SAVE_TABLE,
     putRowIntoIndexDB,
-} from "./indexedDB-utility";
+} from './indexedDB-utility';
 
-const SAVE_FILE_EXTENSION = "json";
+const SAVE_FILE_EXTENSION = 'json';
 
 export function getSave(image?: string): GameSaveData {
     return {
         saveData: getSaveData(),
         gameVersion: __APP_VERSION__,
         date: new Date(),
-        name: "",
+        name: '',
         image: image,
     };
 }
@@ -60,7 +60,7 @@ export async function getSaveFromIndexDB(id: number): Promise<(GameSaveData & { 
 export async function getLastSaveFromIndexDB(): Promise<(GameSaveData & { id: number }) | null> {
     let list = await getListFromIndexDB<GameSaveData & { id: number }>(INDEXED_DB_SAVE_TABLE, {
         pagination: { limit: 1, offset: 0 },
-        order: { field: "date", direction: "prev" },
+        order: { field: 'date', direction: 'prev' },
     });
     if (list.length > 0) {
         return list[0];
@@ -75,10 +75,10 @@ export async function deleteSaveFromIndexDB(id: number): Promise<void> {
 export function downloadGameSave(data: GameSaveData = getSave()) {
     const jsonString = JSON.stringify(data);
     // download the save data as a JSON file
-    const blob = new Blob([jsonString], { type: "application/json" });
+    const blob = new Blob([jsonString], { type: 'application/json' });
     // download the file
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = url;
     a.download = `${__APP_NAME__}-${__APP_VERSION__}-${data.name} ${data.date.toISOString()}.${SAVE_FILE_EXTENSION}`;
     a.click();
@@ -86,8 +86,8 @@ export function downloadGameSave(data: GameSaveData = getSave()) {
 
 export function loadGameSaveFromFile(navigate: (path: string) => void, afterLoad?: () => void) {
     // load the save data from a JSON file
-    const input = document.createElement("input");
-    input.type = "file";
+    const input = document.createElement('input');
+    input.type = 'file';
     input.accept = `application/${SAVE_FILE_EXTENSION}`;
     input.onchange = (e) => {
         const file = (e.target as HTMLInputElement).files?.[0];

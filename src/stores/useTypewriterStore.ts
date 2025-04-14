@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 type TypewriterStoreType = {
     /**
@@ -25,12 +25,12 @@ type TypewriterStoreType = {
 
 const useTypewriterStore = create<TypewriterStoreType>((set) => ({
     delay:
-        typeof localStorage.getItem("typewriter_delay_millisecond") === "number"
-            ? parseInt(localStorage.getItem("typewriter_delay_millisecond")!)
+        typeof localStorage.getItem('typewriter_delay_millisecond') === 'number'
+            ? parseInt(localStorage.getItem('typewriter_delay_millisecond')!)
             : 10,
     setDelay: (value: number) => {
-        if (typeof value === "number") {
-            localStorage.setItem("typewriter_delay_millisecond", value.toString());
+        if (typeof value === 'number') {
+            localStorage.setItem('typewriter_delay_millisecond', value.toString());
             set({ delay: value });
         }
     },

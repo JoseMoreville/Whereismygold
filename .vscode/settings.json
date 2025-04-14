@@ -54,4 +54,7 @@
     // olther
     "extensions.ignoreRecommendations": false,
     "prettier.useEditorConfig": false,
+    "i18n-ally.localesPaths": [
+      "src/locales"
+    ],
 }

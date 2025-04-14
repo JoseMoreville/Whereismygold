@@ -1,8 +1,8 @@
-import { Button, ButtonProps, ButtonTypeMap } from "@mui/joy";
+import { Button, ButtonProps, ButtonTypeMap } from '@mui/joy';
 
 interface Props
     extends ButtonProps<
-        ButtonTypeMap["defaultComponent"],
+        ButtonTypeMap['defaultComponent'],
         {
             component?: React.ElementType;
         }
@@ -11,5 +11,5 @@ interface Props
 export default function ChoiceButton(props: Props) {
     const { sx, ...rest } = props;
 
-    return <Button size='sm' {...rest} />;
+    return <Button size='md' {...rest} />;
 }

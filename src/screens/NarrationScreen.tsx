@@ -1,22 +1,22 @@
-import AspectRatio from "@mui/joy/AspectRatio";
-import Box from "@mui/joy/Box";
-import Card from "@mui/joy/Card";
-import CardContent from "@mui/joy/CardContent";
-import Sheet from "@mui/joy/Sheet";
-import Typography from "@mui/joy/Typography";
-import { motion, Variants } from "motion/react";
-import { useCallback, useRef } from "react";
-import Markdown from "react-markdown";
-import { MarkdownTypewriter } from "react-markdown-typewriter";
-import rehypeRaw from "rehype-raw";
-import remarkGfm from "remark-gfm";
-import { useShallow } from "zustand/react/shallow";
-import SliderResizer from "../components/SliderResizer";
-import useDialogueCardStore from "../stores/useDialogueCardStore";
-import useInterfaceStore from "../stores/useInterfaceStore";
-import useTypewriterStore from "../stores/useTypewriterStore";
-import { useQueryDialogue } from "../use_query/useQueryInterface";
-import ChoiceMenu from "./ChoiceMenu";
+import AspectRatio from '@mui/joy/AspectRatio';
+import Box from '@mui/joy/Box';
+import Card from '@mui/joy/Card';
+import CardContent from '@mui/joy/CardContent';
+import Sheet from '@mui/joy/Sheet';
+import Typography from '@mui/joy/Typography';
+import { motion, Variants } from 'motion/react';
+import { useCallback, useRef } from 'react';
+import Markdown from 'react-markdown';
+import { MarkdownTypewriter } from 'react-markdown-typewriter';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
+import { useShallow } from 'zustand/react/shallow';
+import SliderResizer from '../components/SliderResizer';
+import useDialogueCardStore from '../stores/useDialogueCardStore';
+import useInterfaceStore from '../stores/useInterfaceStore';
+import useTypewriterStore from '../stores/useTypewriterStore';
+import { useQueryDialogue } from '../use_query/useQueryInterface';
+import ChoiceMenu from './ChoiceMenu';
 
 export default function NarrationScreen() {
     const {
@@ -38,19 +38,19 @@ export default function NarrationScreen() {
         closed: {
             opacity: 0,
             y: 200,
-            pointerEvents: "none",
+            pointerEvents: 'none',
         },
     };
     const cardElementVarians: Variants = {
         open: {
             opacity: 1,
             scale: 1,
-            pointerEvents: "auto",
+            pointerEvents: 'auto',
         },
         closed: {
             opacity: 0,
             scale: 0,
-            pointerEvents: "none",
+            pointerEvents: 'none',
         },
     };
     const cardImageVarians: Variants = {
@@ -70,7 +70,7 @@ export default function NarrationScreen() {
             let scrollTop = ref.current.offsetTop - paragraphRef.current.clientHeight / 2;
             paragraphRef.current.scrollTo({
                 top: scrollTop,
-                behavior: "auto",
+                behavior: 'auto',
             });
         }
     }, []);
@@ -78,9 +78,9 @@ export default function NarrationScreen() {
     return (
         <Box
             sx={{
-                height: "95%",
-                width: "100%",
-                position: "absolute",
+                height: '95%',
+                width: '100%',
+                position: 'absolute',
                 left: 0,
                 right: 0,
                 top: 0,
@@ -93,19 +93,19 @@ export default function NarrationScreen() {
                 min={0}
                 value={cardHeight}
                 onChange={(_, value) => {
-                    if (typeof value === "number") {
+                    if (typeof value === 'number') {
                         setCardHeight(value);
                     }
                 }}
                 variants={cardVarians}
-                initial={"closed"}
-                animate={hidden ? "closed" : "open"}
-                exit={"closed"}
-                transition={{ type: "tween" }}
+                initial={'closed'}
+                animate={hidden ? 'closed' : 'open'}
+                exit={'closed'}
+                transition={{ type: 'tween' }}
             />
             <Box
                 sx={{
-                    position: "absolute",
+                    position: 'absolute',
                     height: `${cardHeight}%`,
                     left: 0,
                     right: 0,
@@ -114,46 +114,59 @@ export default function NarrationScreen() {
             >
                 <Box
                     sx={{
-                        position: "absolute",
+                        position: 'absolute',
                         left: 0,
                         right: 0,
                         top: 0,
-                        height: "100%",
+                        height: '100%',
                     }}
                     component={motion.div}
                     variants={cardVarians}
-                    initial={"closed"}
-                    animate={hidden ? "closed" : "open"}
-                    exit={"closed"}
-                    transition={{ type: "tween" }}
+                    initial={'closed'}
+                    animate={hidden ? 'closed' : 'open'}
+                    exit={'closed'}
+                    transition={{ type: 'tween' }}
                 >
                     <Card
-                        key={"dialogue-card"}
+                        key={'dialogue-card'}
                         orientation='horizontal'
                         sx={{
-                            overflow: "auto",
+                            overflow: 'auto',
                             gap: 1,
                             padding: 0,
-                            height: "100%",
+                            height: '100%',
+                            backgroundColor: 'black',
                         }}
                     >
                         {character?.icon && (
                             <AspectRatio
                                 flex
                                 ratio='1'
-                                maxHeight={"20%"}
+                                maxHeight={'20%'}
                                 sx={{
-                                    height: "100%",
+                                    height: '100%',
+                                    backgroundColor: 'black',
                                     minWidth: `${cardImageWidth}%`,
                                 }}
+                                style={{
+                                    backgroundColor: 'black',
+                                }}
+                                className='!bg-black'
                                 component={motion.div}
                                 variants={cardElementVarians}
-                                initial={"closed"}
-                                animate={character?.icon ? "open" : "closed"}
-                                exit={"closed"}
-                                transition={{ type: "tween" }}
+                                initial={'closed'}
+                                animate={character?.icon ? 'open' : 'closed'}
+                                exit={'closed'}
+                                color='neutral'
+                                transition={{ type: 'tween' }}
                             >
-                                <img src={character.icon} loading='lazy' alt='' />
+                                <Box
+                                    sx={{
+                                        backgroundColor: 'black',
+                                    }}
+                                >
+                                    <img src={character.icon} loading='lazy' alt='' />
+                                </Box>
                             </AspectRatio>
                         )}
                         {character && (
@@ -163,7 +176,7 @@ export default function NarrationScreen() {
                                 min={0}
                                 value={cardImageWidth}
                                 onChange={(_, value) => {
-                                    if (typeof value === "number") {
+                                    if (typeof value === 'number') {
                                         if (value > 75) {
                                             value = 75;
                                         }
@@ -174,13 +187,13 @@ export default function NarrationScreen() {
                                     }
                                 }}
                                 variants={cardImageVarians}
-                                initial={"closed"}
-                                animate={character?.icon ? "open" : "closed"}
-                                exit={"closed"}
-                                transition={{ type: "tween" }}
+                                initial={'closed'}
+                                animate={character?.icon ? 'open' : 'closed'}
+                                exit={'closed'}
+                                transition={{ type: 'tween' }}
                             />
                         )}
-                        <CardContent>
+                        <CardContent className='bg-black'>
                             {character && character.name && (
                                 <Typography
                                     fontSize='xl'
@@ -191,29 +204,29 @@ export default function NarrationScreen() {
                                     }}
                                     component={motion.div}
                                     variants={cardElementVarians}
-                                    initial={"closed"}
-                                    animate={character.name ? "open" : "closed"}
-                                    exit={"closed"}
+                                    initial={'closed'}
+                                    animate={character.name ? 'open' : 'closed'}
+                                    exit={'closed'}
                                 >
-                                    {character.name + (character.surname ? " " + character.surname : "")}
+                                    $~: {character.name + (character.surname ? ' ' + character.surname : '')}
                                 </Typography>
                             )}
                             <Sheet
                                 ref={paragraphRef}
                                 sx={{
-                                    bgcolor: "background.level1",
-                                    borderRadius: "sm",
+                                    bgcolor: 'black',
+                                    borderRadius: 'sm',
                                     p: 1.5,
                                     minHeight: 10,
-                                    display: "flex",
+                                    display: 'flex',
                                     flex: 1,
-                                    overflow: "auto",
-                                    height: "100%",
+                                    overflow: 'auto',
+                                    height: '100%',
                                     marginRight: 2,
                                     marginBottom: 2,
                                 }}
                             >
-                                <p style={{ margin: 0, padding: 0 }}>
+                                <p style={{ margin: 0, padding: 0, color: 'white' }}>
                                     {
                                         <span>
                                             <Markdown

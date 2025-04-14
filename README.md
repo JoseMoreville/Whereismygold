@@ -1,113 +1,53 @@
-# Pixi’VN template (React + Vite + MUI joy)
+# Where is my gold: A Linux Adventure - CheerpX Hackathon Submission
 
-![pixi-vn-cover-react](https://github.com/user-attachments/assets/2abc8047-be07-487d-bf9b-de1c1f7c2ca2)
+## Project Overview
 
-This is a template for creating visual novels in React. It uses the Pixi’VN library and Vite as a build tool.
-This Template contains basic functionality inspired by the widespread Visual Noval engine Ren'Py.
+Where is my gold: A Linux Adventure is an educational game that combines visual novel storytelling with practical Linux command learning through an integrated terminal powered by CheerpX. Players progress through a treasure-hunting adventure story where they must use Linux commands to solve puzzles and advance the narrative as they search for hidden gold. This is a Work in progress, it's planned to add a hard mode where the user will have to use their knowledge of Linux commands to solve puzzles and advance the narrative as they search for hidden gold.
 
-## Overview
+## CheerpX Integration
 
-For testing purposes we will recreate the visual novel [Breakdown](https://joshpowlison.itch.io/breakdown) with Pixi’VN in this guide. Breakdown is a short story that has all the features that a visual novel should have. Josh Powlison, the creator of Breakdown, has given us permission to use his narration for educational purposes❤️.
+### Implementation Details
 
-The first page that appears is the main menu. From there, you can start the game, load a saved game, or go to the settings.
+The game incorporates CheerpX in the following ways:
 
-The game page is in `/narration` route. It contains the text box, character avatar, and canvas for the background image. The text box displays the text of the current dialogue. The character avatar displays the character speaking the dialogue. The background image is the background of the scene.
-When a choice has to be made, the choices are displayed at the top of the screen.
+1. **Terminal Emulation**: We use CheerpX to provide a real Linux terminal environment in the browser, allowing players to execute actual Linux commands.
 
-When you are in the game page, you can access with many features through a list of buttons located at the bottom. In this list you can save the game, load a saved game, skip the dialogue, auto play the dialogue, access to the history modal, and access to the settings modal.
+2. **Disk Image Configuration**: We connect to a Debian Linux disk image hosted at `wss://disks.webvm.io/debian_large_20230522_5044875331.ext2`.
 
-The history modal is a list of all the dialogues and choices that have been displayed.
+3. **Command Execution**: The game uses the `executeGameCommand` function to send commands to the terminal and capture the output, although it's not used in the current version and right now man commands are the ones that are executed, it's planned to be used in the hard mode.
 
-The settings modal allows you to change the text speed, go to full screen, edit theme colors, and change go to main menu. The settings for the audio have not been added nor the libraries to manage it, but I recommend adding them.
+### Core Integration Files
 
-### Keyboard shortcuts (hotkeys)
+-   `src/hooks/useCheerpx.tsx`: Contains the core CheerpX integration logic
+-   `src/components/Terminal.tsx`: UI component for the terminal
+-   `src/stores/useTerminalStore.ts`: State management for terminal operations
+-   `src/labels/startLabel.ts`: Game logic that interacts with terminal commands
 
-* `Space` or `Enter`: Continue the dialogue.
-* `Keep Space` or `Keep Enter`: Skip the dialogue.
-* `Alt` + `S`: Quick save the game.
-* `Alt` + `L`: Quick load the game.
-* `Alt` + `H`: Open the history modal.
-* `Esc`: Open the settings modal.
-* `Alt` + `V`: Hide the UI (Show only the canvas).
+### Technical Challenges Overcome
 
-### Used libraries
+1. **Security**: Added simulation mode to ensure that on this mode the user can learn the commands without the risk of breaking the system or wasting time by trying to execute commands they don't know.
 
-This template uses the following libraries:
+2. **Terminal Output Capture**: added system to capture and display terminal output in the game interface.
 
-Core libraries:
+3. **Command Execution Flow**: Used the `executeGameCommand` function to send commands to the terminal and capture the output, although it's not used in the current version, it's planned to be used in the hard mode, right now it's just for testing purposes and to show the user the commands they can use.
+4.
 
-* [Pixi’VN](https://www.npmjs.com/package/@drincs/pixi-vn): A visual novel library.
-* [Vite](https://vitejs.dev/): A build tool that aims to provide a faster and leaner development experience for modern web projects.
-* [Vite Checker](https://www.npmjs.com/package/vite-plugin-checker): A Vite plugin that checks TypeScript types and ESLint on each build.
-* [PWA Vite Plugin](https://vite-pwa-org.netlify.app): A Vite plugin that provides PWA support. This allows the possibility of installing the game as a Progressive Web App.
-* [Zustand](https://zustand-demo.pmnd.rs/): A small, fast, and scalable state management library.
-* [React Router](https://reactrouter.com/): A library that provides routing for React applications.
-* [Tanstack Query](https://tanstack.com/tanstack-query/): A library that provides a set of tools for getting, caching, and updating game data.
-  <img width="44" alt="image" src="https://github.com/user-attachments/assets/bf70dddc-68c0-48f4-9c41-74c22f54e3d1">
-  You can use the following button to show Tanstack Query interactions with the game. (the button will be automatically hidden when released)
-* [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for rapidly building custom designs.
-  * [Tailwind CSS Motion](https://rombo.co/tailwind/): A library that provides a set of utilities for creating animations with Tailwind CSS.
+## Considerations for future improvements
 
-UI libraries:
+The project could be improved in the following ways:
 
-* [Mui Joy](https://mui.com/joy-ui/getting-started/): A React UI framework that provides a set of components and styles for building a website.
-* [Motion](https://motion.dev/): A simple yet powerful motion library for React.
-* [Notistack](https://iamhosseindhv.com/notistack): A library that provides snackbar notifications for React.
-* [React Color Palette](https://www.npmjs.com/package/react-color-palette): A library that provides a color picker for React.
+-   Adding a hard mode where the user will have to use their knowledge of Linux commands to solve puzzles and advance the narrative as they search for hidden gold.
+-   Implement saving mode included on PixiVN.
+-   Added a more rich and complex story, with more puzzles and a more complex plot.
+-   Learn InkJS to allow contributors to write the story and puzzles, and simplify the development of the story.
 
-Text libraries:
+## Libraries Used
 
-* [i18next](https://www.i18next.com/): A library that gives the possibility to manage multiple translations in the application.
-* [React Markdown](https://www.npmjs.com/package/react-markdown): A library that allows you to render markdown in React components.
-  * [React Markdown Typewriter](hhttps://www.npmjs.com/package/react-markdown-typewriter): This library provides a new component, MarkdownTypewriter, that combines the Markdown component of react-markdown with the animation of typewriter. The animation was created entirely with motion.
+-   [CheerpX](https://github.com/leaningtech/webvm)
+-   [PixiVN](https://github.com/DRincs-Productions/pixi-vn)
+-   [PixiVN Template](https://github.com/DRincs-Productions/pixi-vn-react-template)
 
-## How to use
+## Generative AI tools used
 
-Before starting, you need to have Node.js installed on your computer. If you don't have it, you can download it [here](https://nodejs.org/).
-
-### Recommended Visual Studio Code extensions
-
-* [JavaScript and TypeScript Nightly](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-next): Provides JavaScript and TypeScript nightlies.
-* [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint): Integrates ESLint into VS Code.
-* [vscode-color-picker](https://marketplace.visualstudio.com/items?itemName=antiantisepticeye.vscode-color-picker): A color picker for Visual Studio Code.
-* [Version Lens](https://marketplace.visualstudio.com/items?itemName=pflannery.vscode-versionlens): Shows the latest version for each package using code lens.
-
-### Change the icon
-
-You can change the icon of the game by replacing the images in the `public` folder.
-
-## Installation
-
-First, is necessary install the dependencies. To do this, open a terminal in the root folder of the project and run the following command:
-
-```bash
-npm install
-```
-
-## Start the web application
-
-To start the web application, run the following command:
-
-```bash
-npm start
-```
-
-This command will start the development server. Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
-
-### Debugging the web application
-
-If you are using Visual Studio Code, you can use the debug configuration provided with the template. To do this, after launching `npm start`, go to the debug section and select the `Launch Chrome` configuration.
-
-## Distribution
-
-### Web application
-
-To build the project, run the following command:
-
-```bash
-npm run build
-```
-
-This command will create a `dist` folder with the files necessary to run the application. You can deploy this folder to a web server.
-
-You can read more about the possibilities of hosting in the [Pixi’VN documentation](https://pixi-vn.web.app/advanced/distribution.html#hosting).
+-   [Claude](https://www.anthropic.com/claude) - Used to help me generate ideas and write the story.
+-   [GPT-4](https://www.openai.com/gpt-4) - Used to help me generate most of the assets of the game.

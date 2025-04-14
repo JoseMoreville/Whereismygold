@@ -1,6 +1,6 @@
 const INDEXED_DB_VERSION = 2;
-const INDEXED_DB_NAME = "game_db";
-export const INDEXED_DB_SAVE_TABLE = "saves";
+const INDEXED_DB_NAME = 'game_db';
+export const INDEXED_DB_SAVE_TABLE = 'saves';
 
 export function initializeIndexedDB(): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -10,11 +10,11 @@ export function initializeIndexedDB(): Promise<void> {
             let db = request.result;
             if (!db.objectStoreNames.contains(INDEXED_DB_SAVE_TABLE)) {
                 // create the object store
-                let objectStore = db.createObjectStore(INDEXED_DB_SAVE_TABLE, { keyPath: "id", autoIncrement: true });
-                objectStore.createIndex("id", "id", { unique: true });
-                objectStore.createIndex("date", "date", { unique: false });
-                objectStore.createIndex("name", "name", { unique: false });
-                objectStore.createIndex("gameVersion", "gameVersion", { unique: false });
+                let objectStore = db.createObjectStore(INDEXED_DB_SAVE_TABLE, { keyPath: 'id', autoIncrement: true });
+                objectStore.createIndex('id', 'id', { unique: true });
+                objectStore.createIndex('date', 'date', { unique: false });
+                objectStore.createIndex('name', 'name', { unique: false });
+                objectStore.createIndex('gameVersion', 'gameVersion', { unique: false });
             }
         };
 
@@ -22,7 +22,7 @@ export function initializeIndexedDB(): Promise<void> {
             resolve();
         };
         request.onerror = function (event) {
-            console.error("Error opening indexDB", event);
+            console.error('Error opening indexDB', event);
             reject();
         };
     });
@@ -36,22 +36,22 @@ export async function putRowIntoIndexDB<T extends {}>(tableName: string, data: T
             let db = request.result;
             // run onupgradeneeded before onsuccess
             if (!db.objectStoreNames.contains(tableName)) {
-                console.error("Object store rescues does not exist");
+                console.error('Object store rescues does not exist');
                 reject();
             }
-            let transaction = db.transaction([tableName], "readwrite");
+            let transaction = db.transaction([tableName], 'readwrite');
             let objectStore = transaction.objectStore(tableName);
             let setRequest = objectStore.put(data);
             setRequest.onsuccess = function (_event) {
                 resolve(data);
             };
             setRequest.onerror = function (event) {
-                console.error("Error adding save data to indexDB", event);
+                console.error('Error adding save data to indexDB', event);
                 reject();
             };
         };
         request.onerror = function (event) {
-            console.error("Error adding save data to indexDB", event);
+            console.error('Error adding save data to indexDB', event);
         };
     });
 }
@@ -66,19 +66,19 @@ export async function getRowFromIndexDB<T extends {}>(tableName: string, id: any
                 resolve(null);
                 return;
             }
-            let transaction = db.transaction([tableName], "readwrite");
+            let transaction = db.transaction([tableName], 'readwrite');
             let objectStore = transaction.objectStore(tableName);
             let getRequest = objectStore.get(id);
             getRequest.onsuccess = function (_event) {
                 resolve(getRequest.result);
             };
             getRequest.onerror = function (event) {
-                console.error("Error getting save data from indexDB", event);
+                console.error('Error getting save data from indexDB', event);
                 reject();
             };
         };
         request.onerror = function (event) {
-            console.error("Error opening indexDB", event);
+            console.error('Error opening indexDB', event);
             reject();
         };
     });
@@ -94,9 +94,9 @@ export async function getLastRowFromIndexDB<T extends {}>(tableName: string): Pr
                 resolve(null);
                 return;
             }
-            let transaction = db.transaction([tableName], "readwrite");
+            let transaction = db.transaction([tableName], 'readwrite');
             let objectStore = transaction.objectStore(tableName);
-            let getRequest = objectStore.openCursor(null, "prev");
+            let getRequest = objectStore.openCursor(null, 'prev');
             getRequest.onsuccess = function (_event) {
                 let cursor = getRequest.result;
                 if (cursor) {
@@ -106,12 +106,12 @@ export async function getLastRowFromIndexDB<T extends {}>(tableName: string): Pr
                 }
             };
             getRequest.onerror = function (event) {
-                console.error("Error getting save data from indexDB", event);
+                console.error('Error getting save data from indexDB', event);
                 reject();
             };
         };
         request.onerror = function (event) {
-            console.error("Error opening indexDB", event);
+            console.error('Error opening indexDB', event);
             reject();
         };
     });
@@ -122,19 +122,19 @@ export async function deleteRowFromIndexDB(tableName: string, id: any): Promise<
         let request = indexedDB.open(INDEXED_DB_NAME);
         request.onsuccess = function (_event) {
             let db = request.result;
-            let transaction = db.transaction([tableName], "readwrite");
+            let transaction = db.transaction([tableName], 'readwrite');
             let objectStore = transaction.objectStore(tableName);
             let deleteRequest = objectStore.delete(id);
             deleteRequest.onsuccess = function (_event) {
                 resolve();
             };
             deleteRequest.onerror = function (event) {
-                console.error("Error deleting save data from indexDB", event);
+                console.error('Error deleting save data from indexDB', event);
                 reject();
             };
         };
         request.onerror = function (event) {
-            console.error("Error deleting save data from indexDB", event);
+            console.error('Error deleting save data from indexDB', event);
         };
     });
 }
@@ -155,7 +155,7 @@ export async function getListFromIndexDB<T extends {}>(
                 resolve([]);
                 return;
             }
-            let transaction = db.transaction([tableName], "readwrite");
+            let transaction = db.transaction([tableName], 'readwrite');
             let objectStore = transaction.objectStore(tableName);
             let getRequest = options.order
                 ? objectStore.index(options.order.field as string).openCursor(null, options.order.direction)
@@ -184,12 +184,12 @@ export async function getListFromIndexDB<T extends {}>(
                 }
             };
             getRequest.onerror = function (event) {
-                console.error("Error getting save data from indexDB", event);
+                console.error('Error getting save data from indexDB', event);
                 reject();
             };
         };
         request.onerror = function (event) {
-            console.error("Error opening indexDB", event);
+            console.error('Error opening indexDB', event);
             reject();
         };
     });

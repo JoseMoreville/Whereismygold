@@ -1,13 +1,31 @@
-import tailwindcss from "@tailwindcss/vite";
-import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
-import checker from "vite-plugin-checker";
-import { VitePWA } from "vite-plugin-pwa";
+import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
+import type { ViteDevServer } from 'vite';
+import { defineConfig } from 'vite';
+import checker from 'vite-plugin-checker';
+import { VitePWA } from 'vite-plugin-pwa';
 
+const viteServerConfig = () => ({
+    name: 'add-headers',
+    configureServer: (server: ViteDevServer) => {
+        server.middlewares.use((req, res, next) => {
+            res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+            res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+            next();
+        });
+    },
+});
 // https://vite.dev/config/
 export default defineConfig({
+    optimizeDeps: {
+        esbuildOptions: {
+            target: 'es2022',
+        },
+        exclude: ['@leaningtech/cheerpx'],
+    },
     plugins: [
         react(),
+        viteServerConfig(),
         checker({
             typescript: true,
         }),
@@ -15,25 +33,25 @@ export default defineConfig({
         VitePWA({
             // you can generate the icons using: https://favicon.io/favicon-converter/
             // and the maskable icon using: https://progressier.com/maskable-icons-editor
-            includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
+            includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
             manifest: {
-                name: "linix-game",
-                short_name: "linix",
-                description: "linix game with cheerpx",
-                theme_color: "#ffffff",
-                start_url: "/",
-                display: "fullscreen",
-                orientation: "portrait",
+                name: 'linix-game',
+                short_name: 'linix',
+                description: 'linix game with cheerpx',
+                theme_color: '#ffffff',
+                start_url: '/',
+                display: 'fullscreen',
+                orientation: 'portrait',
                 icons: [
                     {
-                        src: "pwa-192x192.png",
-                        sizes: "192x192",
-                        type: "image/png",
+                        src: 'pwa-192x192.png',
+                        sizes: '192x192',
+                        type: 'image/png',
                     },
                     {
-                        src: "pwa-512x512.png",
-                        sizes: "512x512",
-                        type: "image/png",
+                        src: 'pwa-512x512.png',
+                        sizes: '512x512',
+                        type: 'image/png',
                     },
                 ],
             },
@@ -47,8 +65,8 @@ export default defineConfig({
         rollupOptions: {
             output: {
                 manualChunks: {
-                    "lib/@mui/joy": ["@mui/joy"],
-                    "lib/react-markdown": ["react-markdown", "rehype-raw", "remark-gfm"],
+                    'lib/@mui/joy': ['@mui/joy'],
+                    'lib/react-markdown': ['react-markdown', 'rehype-raw', 'remark-gfm'],
                 },
             },
         },

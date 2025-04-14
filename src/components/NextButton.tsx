@@ -1,14 +1,14 @@
-import { narration } from "@drincs/pixi-vn";
-import { Button } from "@mui/joy";
-import { useQueryClient } from "@tanstack/react-query";
-import { motion } from "motion/react";
-import { useCallback } from "react";
-import useGameProps from "../hooks/useGameProps";
-import useEventListener from "../hooks/useKeyDetector";
-import useInterfaceStore from "../stores/useInterfaceStore";
-import useSkipStore from "../stores/useSkipStore";
-import useStepStore from "../stores/useStepStore";
-import { INTERFACE_DATA_USE_QUEY_KEY, useQueryCanGoNext } from "../use_query/useQueryInterface";
+import { narration } from '@drincs/pixi-vn';
+import { Button } from '@mui/joy';
+import { useQueryClient } from '@tanstack/react-query';
+import { motion } from 'motion/react';
+import { useCallback } from 'react';
+import useGameProps from '../hooks/useGameProps';
+import useEventListener from '../hooks/useKeyDetector';
+import useInterfaceStore from '../stores/useInterfaceStore';
+import useSkipStore from '../stores/useSkipStore';
+import useStepStore from '../stores/useStepStore';
+import { INTERFACE_DATA_USE_QUEY_KEY, useQueryCanGoNext } from '../use_query/useQueryInterface';
 
 export default function NextButton() {
     const skipEnabled = useSkipStore((state) => state.enabled);
@@ -47,17 +47,17 @@ export default function NextButton() {
     }, [gameProps, queryClient]);
 
     useEventListener({
-        type: "keypress",
+        type: 'keypress',
         listener: (event) => {
-            if (event.code == "Enter" || event.code == "Space") {
+            if (event.code == 'Enter' || event.code == 'Space') {
                 setSkipEnabled(true);
             }
         },
     });
     useEventListener({
-        type: "keyup",
+        type: 'keyup',
         listener: (event) => {
-            if (event.code == "Enter" || event.code == "Space") {
+            if (event.code == 'Enter' || event.code == 'Space') {
                 setSkipEnabled(false);
                 nextOnClick();
             }
@@ -68,11 +68,10 @@ export default function NextButton() {
         <Button
             variant='solid'
             color='primary'
-            size='sm'
+            size='lg'
             loading={nextStepLoading}
             sx={{
-                position: "absolute",
-                bottom: 0,
+                position: 'absolute',
                 right: 0,
                 width: { xs: 70, sm: 100, md: 150 },
                 border: 3,
@@ -88,18 +87,18 @@ export default function NextButton() {
             variants={{
                 open: {
                     opacity: 1,
-                    pointerEvents: "auto",
+                    pointerEvents: 'auto',
                 },
                 closed: {
                     opacity: 0,
-                    pointerEvents: "none",
+                    pointerEvents: 'none',
                 },
             }}
-            initial={"closed"}
-            animate={hideNextButton ? "closed" : "open"}
-            exit={"closed"}
+            initial={'closed'}
+            animate={hideNextButton ? 'closed' : 'open'}
+            exit={'closed'}
         >
-            {t("next")}
+            {t('next')}
         </Button>
     );
 }
