@@ -259,6 +259,17 @@ export default function NarrationScreen() {
                                     }
                                 </p>
                             </Sheet>
+                            <Typography
+                                sx={{
+                                    color: 'white',
+                                    textAlign: 'left',
+                                    fontSize: '0.8rem',
+                                    paddingLeft: 3,
+                                    paddingBottom: 1,
+                                }}
+                            >
+                                Press Enter to continue
+                            </Typography>
                         </CardContent>
                     </Card>
                 </Box>
