@@ -87,6 +87,28 @@ export const Terminal: React.FC<TerminalProps> = ({
         }
     }, []);
 
+    // Setup MutationObserver to catch all content changes and auto-scroll
+    useEffect(() => {
+        if (!outputRef.current) return;
+
+        // Create observer to watch for content changes
+        const observer = new MutationObserver(() => {
+            if (outputRef.current) {
+                outputRef.current.scrollTop = outputRef.current.scrollHeight;
+            }
+        });
+
+        // Start observing
+        observer.observe(outputRef.current, {
+            childList: true,
+            subtree: true,
+            characterData: true,
+        });
+
+        // Cleanup
+        return () => observer.disconnect();
+    }, []);
+
     // Create a combined output from both sources
     const displayOutput = terminalOutput || localOutput || '';
 
@@ -164,7 +186,7 @@ export const Terminal: React.FC<TerminalProps> = ({
                             <div
                                 ref={outputRef}
                                 className={`flex-1 ${themeClasses.terminal} font-mono p-3 overflow-y-auto border whitespace-pre-wrap text-sm leading-relaxed rounded-md scroll-smooth`}
-                                style={{ scrollBehavior: 'smooth', maxHeight: '100%' }}
+                                style={{ scrollBehavior: 'smooth', maxHeight: '100%', overscrollBehavior: 'contain' }}
                             >
                                 {displayOutput || (
                                     <div className='text-gray-400 italic'>
@@ -223,7 +245,7 @@ export const Terminal: React.FC<TerminalProps> = ({
             <div
                 ref={outputRef}
                 className={`${themeClasses.terminal} font-mono p-3 overflow-y-auto border whitespace-pre-wrap mb-3 h-[300px] rounded-md scroll-smooth`}
-                style={{ scrollBehavior: 'smooth' }}
+                style={{ scrollBehavior: 'smooth', overscrollBehavior: 'contain' }}
             >
                 {displayOutput || (
                     <div className='text-gray-400 italic'>
@@ -266,16 +288,8 @@ export const executeGameCommand = async (command: string): Promise<string | null
         // Format command with a visible separator for better readability
         useTerminalStore.getState().appendOutput(`\n$ ${command}\n`);
 
-        // Find and scroll any terminal output elements that might exist
-        setTimeout(() => {
-            const terminalElements = document.querySelectorAll('[id^="terminal-bottom-anchor"]');
-            terminalElements.forEach((element) => {
-                const container = element.parentElement;
-                if (container) {
-                    container.scrollTop = container.scrollHeight;
-                }
-            });
-        }, 50);
+        // Force scroll to bottom after command is entered
+        forceScrollTerminals();
 
         // Attempt to execute the command
         const result = await useTerminalStore.getState().runCommand(command);
@@ -293,33 +307,14 @@ export const executeGameCommand = async (command: string): Promise<string | null
             const helpInfo = getCommandHelp(command);
             if (helpInfo) {
                 useTerminalStore.getState().appendOutput(`\n${helpInfo}\n`);
-
-                // Scroll again after help info is added
-                setTimeout(() => {
-                    const terminalElements = document.querySelectorAll('[id^="terminal-bottom-anchor"]');
-                    terminalElements.forEach((element) => {
-                        const container = element.parentElement;
-                        if (container) {
-                            container.scrollTop = container.scrollHeight;
-                        }
-                    });
-                }, 50);
-
+                // Force scroll after help info is added
+                forceScrollTerminals();
                 return helpInfo;
             }
         }
 
         // Ensure terminal scrolls to show the result
-        setTimeout(() => {
-            const terminalElements = document.querySelectorAll('[id^="terminal-bottom-anchor"]');
-            terminalElements.forEach((element) => {
-                const container = element.parentElement;
-                if (container) {
-                    container.scrollTop = container.scrollHeight;
-                }
-            });
-        }, 50);
-
+        forceScrollTerminals();
         return result;
     } catch (err) {
         console.error('Error executing game command:', err);
@@ -335,19 +330,24 @@ export const executeGameCommand = async (command: string): Promise<string | null
             useTerminalStore.getState().appendOutput(`\nHelpful information about '${commandName}':\n${helpInfo}\n`);
         }
 
-        // Ensure terminal scrolls to show the error
-        setTimeout(() => {
-            const terminalElements = document.querySelectorAll('[id^="terminal-bottom-anchor"]');
-            terminalElements.forEach((element) => {
-                const container = element.parentElement;
-                if (container) {
-                    container.scrollTop = container.scrollHeight;
-                }
-            });
-        }, 50);
-
+        // Force scroll to show the error
+        forceScrollTerminals();
         return null;
     }
+};
+
+// Helper function to force all terminal outputs to scroll to bottom
+const forceScrollTerminals = () => {
+    // Use setTimeout to ensure DOM has updated
+    setTimeout(() => {
+        const terminalElements = document.querySelectorAll('[id^="terminal-bottom-anchor"]');
+        terminalElements.forEach((element) => {
+            const container = element.parentElement;
+            if (container) {
+                container.scrollTop = container.scrollHeight;
+            }
+        });
+    }, 50);
 };
 
 // Function to provide simplified man-page-like information about common commands
