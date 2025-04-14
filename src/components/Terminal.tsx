@@ -128,7 +128,7 @@ export const Terminal: React.FC<TerminalProps> = ({
                 };
             case 'game':
                 return {
-                    tabButton: 'bg-blue-900 hover:bg-blue-800 text-white',
+                    tabButton: 'bg-pink-900 hover:bg-pink-800 text-white',
                     panel: 'bg-black bg-opacity-90 backdrop-blur-sm drop-shadow-lg',
                     header: 'text-blue-200',
                     terminal: 'bg-black text-green-500 border-black',

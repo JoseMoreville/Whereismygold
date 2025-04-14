@@ -67,15 +67,15 @@ export default function NextButton() {
     return (
         <Button
             variant='solid'
-            color='primary'
+            color='neutral'
             size='lg'
             loading={nextStepLoading}
             sx={{
                 position: 'absolute',
-                right: 0,
+                left: 0,
                 width: { xs: 70, sm: 100, md: 150 },
                 border: 3,
-                zIndex: 100,
+                zIndex: 1000000000,
             }}
             onClick={() => {
                 if (skipEnabled) {
