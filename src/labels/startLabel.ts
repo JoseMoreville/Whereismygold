@@ -26,6 +26,13 @@ const forestScene = () => {
                         character: webiem,
                         text: `ls command shows:\n\nbackpack  map  water_flask`,
                     };
+                    try {
+                        executeGameCommand('ls').then((result) => {
+                            console.log('Successfully listed directory contents:', result);
+                        });
+                    } catch (error) {
+                        console.error('Error executing command:', error);
+                    }
                 },
                 createTransition('check_backpack', checkBackpackLabel()),
             ]);
