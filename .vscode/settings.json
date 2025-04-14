@@ -1,0 +1,57 @@
+{
+    // Formatter
+    "[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+    },
+    "[javascriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+    },
+    "[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+    },
+    "[typescriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+    },
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features",
+        "editor.formatOnSave": true
+    },
+    "[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true,
+        "prettier.tabWidth": 2,
+    },
+    "prettier.jsxSingleQuote": true,
+    "prettier.printWidth": 120,
+    "prettier.useTabs": false,
+    "prettier.singleAttributePerLine": false,
+    "prettier.tabWidth": 4,
+    // reorganise imports
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    // references
+    "javascript.referencesCodeLens.enabled": true,
+    "javascript.referencesCodeLens.showOnAllFunctions": true,
+    "typescript.referencesCodeLens.enabled": true,
+    "typescript.referencesCodeLens.showOnAllFunctions": true,
+    // does fetch when he does Pull
+    "git.fetchOnPull": true,
+    // move file
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    // color
+    "vscode-color-picker.languages": [
+        "javascript",
+        "typescript",
+        "javascriptreact",
+        "typescriptreact",
+    ],
+    // olther
+    "extensions.ignoreRecommendations": false,
+    "prettier.useEditorConfig": false,
+}
