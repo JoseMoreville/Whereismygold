@@ -62,6 +62,7 @@ export default defineConfig({
         __APP_NAME__: JSON.stringify(process.env.npm_package_name),
     },
     build: {
+        target: 'es2022',
         rollupOptions: {
             output: {
                 manualChunks: {
