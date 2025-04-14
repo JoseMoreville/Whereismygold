@@ -3,6 +3,9 @@
 ## Try demo
 https://gold.hadess.dev/
 
+## Presentation
+https://www.figma.com/deck/3on3EoIBDFn1UZpEZoY158/Slide-hackathon-two?node-id=2-42&t=vLwQP5RW5fToiVd8-1
+
 ## Project Overview
 
 Where is my gold: A Linux Adventure is an educational game that combines visual novel storytelling with practical Linux command learning through an integrated terminal powered by CheerpX. Players progress through a treasure-hunting adventure story where they must use Linux commands to solve puzzles and advance the narrative as they search for hidden gold. This is a Work in progress, it's planned to add a hard mode where the user will have to use their knowledge of Linux commands to solve puzzles and advance the narrative as they search for hidden gold.
