@@ -33,11 +33,10 @@ export default defineConfig({
         VitePWA({
             // you can generate the icons using: https://favicon.io/favicon-converter/
             // and the maskable icon using: https://progressier.com/maskable-icons-editor
-            includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
             manifest: {
-                name: 'linix-game',
-                short_name: 'linix',
-                description: 'linix game with cheerpx',
+                name: 'Where is my gold?',
+                short_name: 'Where is my gold?',
+                description: 'Where is my gold?',
                 theme_color: '#ffffff',
                 start_url: '/',
                 display: 'fullscreen',
